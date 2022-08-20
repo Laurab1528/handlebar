@@ -1,39 +1,46 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const { engine } = require('express-handlebars');
-const PORT = 8080;
+const { engine } = require("express-handlebars");
+const Contenedor = require("./Contenedor");
+const contenedor = new Contenedor("productos.json");
 
-const server = app.listen(PORT, () => {
-  console.log(`Servidor http escuchando en el puerto ${server.address().port}`);
-});
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-server.on('error', (error) => console.log(`Error en servidor ${error}`));
-app.use('/public', express.static(__dirname + '/public'));
-
-app.set('view engine', 'hbs');
-app.set('views', './views');
+app.set("view engine", "hbs");
+app.set("views", "./views");
 app.engine(
-  'hbs',
+  "hbs",
   engine({
-    extname: '.hbs',
-    defaultLayout: 'index.hbs',
-    layoutsDir: __dirname + '/views/layouts',
-    partialsDir: __dirname + '/views/partials',
+    extname: ".hbs",
+    defaultLayout: "index.hbs",
+    layoutsDir: __dirname + "/views/layouts",
+    partialsDir: __dirname + "/views/partials",
   })
 );
 
-let productsHC = [
-  { id: 1, title: 'nike ball', price: 101, thumbnail: 'http://localhost:8080/public/nike-ball.jpg' },
-  { id: 2, title: 'nike shoes', price: 102, thumbnail: 'http://localhost:8080/public/nike-shoes.jpg' },
-  { id: 3, title: 'adidas shoes', price: 102, thumbnail: 'http://localhost:8080/public/adidas-shoes.jpg' },
-];
-
-app.get('/', (req, res) => {
-  //sirve productslist.hbs en index.hbs (index.hbs es la plantilla por defecto donde arranca todo)
-  res.render('productslist', { products: productsHC, productsExist: true });
+const server = app.listen(8080, () => {
+  console.log(`Servidor http iniciado en el puerto ${server.address().port}`);
+});
+server.on("error", (error) => {
+  console.log(`Error en el servidor ${error}`);
 });
 
-app.get('/form', (req, res) => {
-  res.render('formulario', { products: productsHC, productsExist: true });
+app.get("/", (req, res) => {
+  res.render("formulario");
 });
 
+app.post("/productos", async (req, res) => {
+  const { body } = req;
+  const { title, price, thumbnail } = body;
+  const producto = { title, price: parseInt(price), thumbnail };
+  await contenedor.save(producto);
+  res.redirect("/");
+});
+
+app.get("/productos", async (req, res) => {
+  const productos = await contenedor.getAll();
+  if (productos.length !== 0) {
+    res.render("productslist", { productos });
+  } 
+});
