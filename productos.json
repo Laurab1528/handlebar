@@ -1,11 +1,28 @@
 [
   {
+    "title": "LG",
+    "price": 1200,
+    "thumbnail": "https://sp.depositphotos.com/stock-photos/hoy.html",
+    "id": 6
+  },
+  {
+    "title": "hoy",
+    "price": 1200,
+    "thumbnail": "https://es.wikipedia.org/wiki/Hoy_%28programa_de_televisi%C3%B3n%29#/media/Archivo:HOY.jpg",
+    "id": 5
+  },
+  {
+    "title": "Nike",
+    "price": 1200,
+    "thumbnail": "https",
+    "id": 4
+  },
+  {
     "name": "Sony",
     "price": 2500,
     "thumbnail": "https://cosonyb2c.vtexassets.com/arquivos/ids/350956-1600-1600?v=637550243914100000&width=1600&height=1600&aspect=true",
-    "id": 1
+    "id": 3
   },
-
   {
     "name": "LG",
     "price": 1000,
@@ -16,6 +33,12 @@
     "name": "Sony",
     "price": 2500,
     "thumbnail": "https://cosonyb2c.vtexassets.com/arquivos/ids/350956-1600-1600?v=637550243914100000&width=1600&height=1600&aspect=true",
-    "id": 3
+    "id": 1
+  },
+  {
+    "title": "Samsung",
+    "price": 1200,
+    "thumbnail": "https://sp.depositphotos.com/stock-photos/hoy.html",
+    "id": 7
   }
 ]
